@@ -43,6 +43,9 @@ namespace prView
             this.txtPrAddr = new System.Windows.Forms.TextBox();
             this.btnPrRead = new System.Windows.Forms.Button();
             this.txtPrReadLen = new System.Windows.Forms.TextBox();
+            this.picIcon = new System.Windows.Forms.PictureBox();
+            this.btnGetIcon = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.picIcon)).BeginInit();
             this.SuspendLayout();
             // 
             // btnGetPrList
@@ -68,7 +71,7 @@ namespace prView
             // 
             this.btnGetPrInfo.Location = new System.Drawing.Point(12, 426);
             this.btnGetPrInfo.Name = "btnGetPrInfo";
-            this.btnGetPrInfo.Size = new System.Drawing.Size(597, 36);
+            this.btnGetPrInfo.Size = new System.Drawing.Size(419, 36);
             this.btnGetPrInfo.TabIndex = 2;
             this.btnGetPrInfo.Text = "GetInfo";
             this.btnGetPrInfo.UseVisualStyleBackColor = true;
@@ -165,11 +168,32 @@ namespace prView
             this.txtPrReadLen.TabIndex = 12;
             this.txtPrReadLen.Text = "1024";
             // 
+            // picIcon
+            // 
+            this.picIcon.Location = new System.Drawing.Point(616, 387);
+            this.picIcon.Name = "picIcon";
+            this.picIcon.Size = new System.Drawing.Size(32, 32);
+            this.picIcon.TabIndex = 13;
+            this.picIcon.TabStop = false;
+            this.picIcon.DoubleClick += new System.EventHandler(this.picIcon_DoubleClick);
+            // 
+            // btnGetIcon
+            // 
+            this.btnGetIcon.Location = new System.Drawing.Point(437, 426);
+            this.btnGetIcon.Name = "btnGetIcon";
+            this.btnGetIcon.Size = new System.Drawing.Size(172, 36);
+            this.btnGetIcon.TabIndex = 14;
+            this.btnGetIcon.Text = "GetIcon";
+            this.btnGetIcon.UseVisualStyleBackColor = true;
+            this.btnGetIcon.Click += new System.EventHandler(this.btnGetIcon_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1493, 979);
+            this.Controls.Add(this.btnGetIcon);
+            this.Controls.Add(this.picIcon);
             this.Controls.Add(this.txtPrReadLen);
             this.Controls.Add(this.txtPrAddr);
             this.Controls.Add(this.btnPrRead);
@@ -187,6 +211,7 @@ namespace prView
             this.MaximizeBox = false;
             this.Name = "frmMain";
             this.Text = "prView";
+            ((System.ComponentModel.ISupportInitialize)(this.picIcon)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -208,6 +233,8 @@ namespace prView
         private System.Windows.Forms.TextBox txtPrAddr;
         private System.Windows.Forms.Button btnPrRead;
         private System.Windows.Forms.TextBox txtPrReadLen;
+        private System.Windows.Forms.PictureBox picIcon;
+        private System.Windows.Forms.Button btnGetIcon;
     }
 }
 

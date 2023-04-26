@@ -119,7 +119,8 @@ namespace prView
                     txtPrInfo.Text += $" bit: unknown {bitness}\r\n";
                     break;
             }
-            txtPrInfo.Text += string.Format("file: {0}\r\n", NativeMethods.GetProcessFileName(p));
+            string pfilename = NativeMethods.GetProcessFileName(p);
+            txtPrInfo.Text += string.Format("file: {0}\r\n", pfilename);
             txtPrInfo.Text += string.Format("args: {0}\r\n", DotNetMethods.GetCommandLine(p));
             ProcessThread main = getMainThread(p);
             txtPrInfo.Text += string.Format(" tid: {0}\r\n", main == null ? -1 : main.Id);
@@ -263,6 +264,43 @@ namespace prView
                 {
                     line += ".";
                 }
+            }
+        }
+
+        private void btnGetIcon_Click(object sender, EventArgs e)
+        {
+            if (lstPr.SelectedItem == null) return;
+            lstMd.Items.Clear();
+            txtPrInfo.Text = "";
+            ProcessItem item = (ProcessItem)lstPr.SelectedItem;
+            Process p = item.Ref;
+            string pfilename = NativeMethods.GetProcessFileName(p);
+            System.Drawing.Icon picon = System.Drawing.Icon.ExtractAssociatedIcon(pfilename);
+            if (picon != null)
+            {
+                if (picIcon.Image != null) picIcon.Image.Dispose();
+                System.Drawing.Bitmap ico = picon.ToBitmap();
+                int icobottom = picIcon.Top + picIcon.Width;
+                picIcon.Width = ico.Width;
+                picIcon.Height = ico.Height;
+                picIcon.Top = icobottom - ico.Height;
+                picIcon.Image = ico;
+                picon.Dispose();
+            }
+        }
+
+        private void picIcon_DoubleClick(object sender, EventArgs e)
+        {
+            if (lstPr.SelectedItem == null) return;
+            lstMd.Items.Clear();
+            txtPrInfo.Text = "";
+            ProcessItem item = (ProcessItem)lstPr.SelectedItem;
+            Process p = item.Ref;
+            string pfilename = NativeMethods.GetProcessFileName(p);
+            System.Drawing.Icon picon = System.Drawing.Icon.ExtractAssociatedIcon(pfilename);
+            using (System.IO.FileStream s = System.IO.File.Create("D:\\icon.ico"))
+            {
+                picon.Save(s);
             }
         }
     }
