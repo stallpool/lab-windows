@@ -84,5 +84,21 @@ namespace ScreenCapture
                 return bitmap.Clone(new Rectangle(0, 0, bitmap.Width, bitmap.Height), System.Drawing.Imaging.PixelFormat.DontCare);
             }
         }
+
+        // use less memory than Graphics.CopyFromScreen
+        public static Bitmap FastCaptureScreenCropAndStretch(int x, int y, int w, int h, int sw, int sh)
+        {
+            IntPtr desktop = NativeMethods.GetDesktopWindow();
+            IntPtr src = NativeMethods.GetDC(desktop);
+            Bitmap r = new Bitmap(sw, sh);
+            Graphics g = Graphics.FromImage(r);
+            IntPtr dst = g.GetHdc();
+            NativeMethods.SetStretchBltMode(dst, NativeMethods.StretchBltMode.STRETCH_HALFTONE);
+            NativeMethods.StretchBlt(dst, 0, 0, sw, sh, src, x, y, w, h, NativeMethods.TernaryRasterOperations.SRCCOPY);
+            NativeMethods.DeleteDC(dst);
+            g.Dispose();
+            NativeMethods.ReleaseDC(desktop, src);
+            return r;
+        }
     }
 }
